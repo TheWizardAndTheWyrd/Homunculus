@@ -7,7 +7,7 @@ namespace Homunculus.Core.Actors
     {
         public NeuronActor()
         {
-            //Receive<Neuron>(neuron =>
+            //Receive<INeuron>(neuron =>
             //    Console.WriteLine("The result of our Neuron DotProduct: {0}", neuron.));
         }
     }

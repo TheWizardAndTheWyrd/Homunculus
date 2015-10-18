@@ -6,7 +6,7 @@ using Homunculus.Core.Extensions;
 namespace Homunculus.Core.Tests.Extensions
 {
     [TestClass]
-    public class ExtensionMethods
+    public class ExtensionMethodsTests
     {
         /// <summary>
         /// TODO: Determin why assertion fails without casting to string; probably because of the floating point precision.
