@@ -35,5 +35,10 @@ namespace Homunculus.Core.Extensions
             double exponent = Math.Pow(2.0, value.Next(-126, 128));
             return (float)(mantissa * exponent);
         }
+
+        public static List<T> ToList<T>(this Tuple<T, T, T> value)
+        {
+            return new List<T> {value.Item1, value.Item2, value.Item3};
+        }
     }
 }

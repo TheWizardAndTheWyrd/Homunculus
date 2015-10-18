@@ -12,7 +12,8 @@ namespace Homunculus.Core
         #region [ Private Fields ]
         private Random _random;
         private Tuple<float, float, float> _weights;
-        private float _input;
+        private IEnumerable<float> _input;
+        private int _accumulator = 0;
         #endregion
 
         #region [ Public Properties ]
@@ -22,26 +23,27 @@ namespace Homunculus.Core
             set { _weights = value; }
         }
 
-        public float Input
+        public IEnumerable<float> Input
         {
             get { return _input; }
             set { _input = value; }
         }
 
-        //public float Output
-        //{
-        //    get
-        //    {
-        //        return 
-        //    }
-        //}
+        public float Output => Input.DotProduct(Weights.ToList(), Accumulator);
+
+        public int Accumulator
+        {
+            get { return _accumulator; }
+            set { _accumulator = value; }
+        }
         #endregion
 
         #region [ Constructors ]
-        public Neuron(int seed, Tuple<float, float, float> weights)
+        public Neuron(int seed, Tuple<float, float, float> weights, int accumulator = 0)
         {
             _random = new Random(seed);
             _weights = weights;
+            _accumulator = accumulator;
         }
 
         public Neuron(int seed)

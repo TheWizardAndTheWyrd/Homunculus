@@ -92,5 +92,28 @@ namespace Homunculus.Core.Tests.Extensions
             Assert.AreNotEqual(0, nextRandomFloat);
             Console.WriteLine("Result of NextFloat invocations: {0}", nextRandomFloat);
         }
+
+        [TestMethod]
+        public void TupleToListTest()
+        {
+            // Arrange
+            float v1 = 0.2342523523523452345F;
+            float v2 = 0.2342523523523452345F;
+            float v3 = 0.2342523523523452345F;
+
+            var tuple = new Tuple<float, float, float>(v1, v2, v3);
+
+            // Act
+            var tupleToList = tuple.ToList();
+
+            // Assert
+            Assert.AreNotEqual(0, tupleToList.Count);
+            Assert.AreEqual(3, tupleToList.Count);
+            Assert.AreEqual(typeof (List<float>), tupleToList.GetType());
+            Assert.AreEqual(true, tupleToList.Contains(v1));
+            Assert.AreEqual(true, tupleToList.Contains(v2));
+            Assert.AreEqual(true, tupleToList.Contains(v3));
+            Console.WriteLine("Result of converting tuple to a List<float> name tupleToList: {0}", tupleToList);
+        }
     }
 }
