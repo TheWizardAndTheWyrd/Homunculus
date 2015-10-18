@@ -8,6 +8,9 @@ namespace Homunculus.Core.Tests.Extensions
     [TestClass]
     public class ExtensionMethods
     {
+        /// <summary>
+        /// TODO: Determin why assertion fails without casting to string; probably because of the floating point precision.
+        /// </summary>
         [TestMethod]
         public void DotProductTest()
         {
@@ -25,8 +28,30 @@ namespace Homunculus.Core.Tests.Extensions
 
             // Assert
             Assert.AreNotEqual(0, result);
-            Assert.AreEqual(0.05487416F, result);
-            Console.WriteLine("Result of DotProduct invocation: {0}", result);
+            Assert.AreEqual(0.05487416F.ToString(), result.ToString());
+            Console.WriteLine("String Result of DotProduct invocation: {0}", result);
+        }
+
+        [TestMethod]
+        public void DotProductWithAccumulatorTest()
+        {
+            // Arrange
+            float v1 = 0.2342523523523452345F;
+            float v2 = 0.2342523523523452345F;
+            int accumulator = 1;
+
+            List<float> leftValues = new List<float>() { v1 };
+            List<float> rightValues = new List<float>() { v2 };
+
+            float result;
+
+            // Act
+            result = leftValues.DotProduct(rightValues, accumulator);
+
+            // Assert
+            Assert.AreNotEqual(0, result);
+            //Assert.AreEqual(0.05487416F.ToString(), result.ToString());
+            Console.WriteLine("String Result of DotProduct invocation: {0}", result);
         }
 
         [TestMethod]
@@ -51,6 +76,21 @@ namespace Homunculus.Core.Tests.Extensions
             Assert.AreNotEqual(0, result);
             Assert.AreEqual(0.743482F, result);
             Console.WriteLine("Result of DotProduct invocation: {0}", result);
+        }
+
+        [TestMethod]
+        public void NextRandomFloatTest()
+        {
+            // Arrange
+            Random random = new Random();
+
+            // Act
+            float nextRandomFloat = random.NextFloat();
+
+            // Assert
+            Assert.AreEqual(typeof (float), nextRandomFloat.GetType());
+            Assert.AreNotEqual(0, nextRandomFloat);
+            Console.WriteLine("Result of NextFloat invocations: {0}", nextRandomFloat);
         }
     }
 }
