@@ -10,3 +10,7 @@ Summary
 Homonculus.NET is an implementation of a Topology Weight Evolving Artificial 
 Neural Network written in C#.  The implementation is based upon the
 reference implementation in the "Handbook Neuroevolution Through Erlang".
+
+Since the referecen implementation uses Erlang's actor model for concurrency
+and soft real-time concurrency and fault-tolerance, we are using the
+Akka.NET library (an actor system implementation based on Scala's Akka).
