@@ -54,6 +54,7 @@
     <Compile Include="Interfaces\ICortex.cs" />
     <Compile Include="Interfaces\INeuron.cs" />
     <Compile Include="Interfaces\ISensor.cs" />
+    <Compile Include="Interfaces\ISignal.cs" />
     <Compile Include="Neuron.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
