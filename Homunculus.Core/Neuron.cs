@@ -13,6 +13,8 @@ namespace Homunculus.Core
         #endregion
 
         #region [ Public Properties ]
+
+        public Guid Id { get; private set; }
         public Tuple<float, float, float> Weights { get; set; }
 
         public IEnumerable<float> Input { get; set; }
@@ -34,6 +36,8 @@ namespace Homunculus.Core
                                                       _random.NextFloat());
 
             Accumulator = accumulator;
+
+            Id = Guid.NewGuid();
         }
 
         public Neuron(int seed, int accumulator = 0)
@@ -43,6 +47,8 @@ namespace Homunculus.Core
             Weights = new Tuple<float, float, float>(_random.NextFloat(), _random.NextFloat(), _random.NextFloat());
 
             Accumulator = accumulator;
+
+            Id = Guid.NewGuid();
         }
         #endregion
         
