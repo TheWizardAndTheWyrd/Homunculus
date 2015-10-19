@@ -50,7 +50,10 @@
   <ItemGroup>
     <Compile Include="Actors\NeuronActor.cs" />
     <Compile Include="Extensions\ExtensionMethods.cs" />
+    <Compile Include="Interfaces\IActuator.cs" />
+    <Compile Include="Interfaces\ICortex.cs" />
     <Compile Include="Interfaces\INeuron.cs" />
+    <Compile Include="Interfaces\ISensor.cs" />
     <Compile Include="Neuron.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
