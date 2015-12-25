@@ -2,7 +2,7 @@
 
 namespace Homunculus.Core.Interfaces
 {
-    public interface ITopology
+    public interface IForex
     {
         Guid Id { get; }
     }
