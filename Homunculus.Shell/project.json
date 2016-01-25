@@ -1,0 +1,24 @@
+﻿{
+  "version": "1.0.0-*",
+  "description": "Homunculus.Shell Console Application",
+  "authors": [ "Ramon Long" ],
+  "tags": [ "" ],
+  "projectUrl": "",
+  "licenseUrl": "",
+
+  "compilationOptions": {
+    "emitEntryPoint": true
+  },
+
+  "dependencies": {
+  },
+
+  "commands": {
+    "Homunculus.Shell": "Homunculus.Shell"
+  },
+
+  "frameworks": {
+    "dnx451": { },
+    "dnx461": { }
+  }
+}

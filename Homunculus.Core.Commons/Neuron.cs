@@ -1,9 +1,9 @@
-﻿using Homunculus.Core.Extensions;
-using System;
+﻿using System;
 using System.Collections.Generic;
+using Homunculus.Core.Extensions;
 using Homunculus.Core.Interfaces;
 
-namespace Homunculus.Core
+namespace Homunculus.Core.Commons
 {
     public class Neuron : INeuron
     {

@@ -1,0 +1,13 @@
+﻿{
+  "version": "1.0.0-*",
+  "description": "Homunculus.Core.Extensions Class Library",
+  "authors": [ "Ramon Long" ],
+  "tags": [ "" ],
+  "projectUrl": "",
+  "licenseUrl": "",
+
+  "frameworks": {
+    "net451": { },
+    "net461": { }
+  }
+}

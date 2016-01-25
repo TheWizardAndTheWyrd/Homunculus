@@ -1,0 +1,15 @@
+﻿{
+  "version": "1.0.0-*",
+  "description": "Homunculus.Core.Interfaces Class Library",
+  "authors": [ "Ramon Long" ],
+  "tags": [ "" ],
+  "projectUrl": "",
+  "licenseUrl": "",
+  "frameworks": {
+    "net451": { },
+    "net461": { }
+  },
+  "dependencies": {
+    "Akka": "1.0.6"
+  }
+}

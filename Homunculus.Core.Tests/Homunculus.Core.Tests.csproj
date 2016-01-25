@@ -74,12 +74,6 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\Homunculus.Core\Homunculus.Core.csproj">
-      <Project>{2270B847-7EC7-46F3-86AA-607882E8B2D4}</Project>
-      <Name>Homunculus.Core</Name>
-    </ProjectReference>
-  </ItemGroup>
-  <ItemGroup>
     <None Include="packages.config" />
   </ItemGroup>
   <Choose>

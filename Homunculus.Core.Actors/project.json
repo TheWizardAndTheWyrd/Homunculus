@@ -1,0 +1,18 @@
+﻿{
+  "version": "1.0.0-*",
+  "description": "Homunculus.Core.Actors Class Library",
+  "authors": [ "Ramon Long" ],
+  "tags": [ "" ],
+  "projectUrl": "",
+  "licenseUrl": "",
+
+  "frameworks": {
+    "net451": { },
+    "net461": { }
+  },
+  "dependencies": {
+    "Akka": "1.0.6",
+    "Homunculus.Core.Commons": "1.0.0-*",
+    "Homunculus.Core.Interfaces": "1.0.0-*"
+  }
+}
