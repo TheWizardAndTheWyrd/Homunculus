@@ -7,6 +7,13 @@ namespace Homunculus.Core.Interfaces
     /// <summary>
     /// The INeuron interface and its implementations form the basic building blocks
     /// of our Topology Weight Evolving Artificial Neural Networks.
+    /// 
+    /// Our INeuron implementations all follow the same basic logical signal flow:
+    ///     1. Accept Input signals.
+    ///     2. Weighs each Input by finding the dot product of the Input and the Weights.
+    ///     3. Add a bias to the DotProduct (used for tunable asymmetry).
+    ///     4. Apply the DotProduct and the Threshold to the ActivationFunction.
+    ///     5. Forward to the Output to the next INeurons in the neural network.
     /// </summary>
     public interface INeuron
     {
