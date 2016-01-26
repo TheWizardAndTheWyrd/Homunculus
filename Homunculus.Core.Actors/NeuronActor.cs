@@ -64,18 +64,34 @@ namespace Homunculus.Core.Actors
 
         #region [ Constructors ]
 
-        public NeuronActor(IEnumerable<IActorRef> inputActorRefs)
+        private void InitializeNeuronActor()
+        {
+            try
+            {
+                this.InputActors = new List<IActorRef>();
+                this.OutputActors = new List<IActorRef>();
+                this.Weights = new Tuple<float?, float?, float?>(null, null, null);
+                this.DotProduct = null;
+                this.Input = new List<float?>();
+                this.Output = null;
+                this.Accumulator = 0;
+                this.Bias = null;
+                this.Threshold = null;
+            }
+            catch (Exception e)
+            {
+                _log.Error(e, $"[{DateTime.Now}] Invocation of InitializeNeuronActor() threw an exception when instantiated by: {Sender}");
+            }
+        }
+
+        public NeuronActor()
         {
             #region [ Setup Initial Actor State ]
-            
-            // TODO: Refacor this into a separate helper method.
-            this.Id = Guid.NewGuid();
-            this.InputActors = new List<IActorRef>();
-            this.OutputActors = new List<IActorRef>();
-            
-            #endregion
 
-            this.InputActors.ToList().AddRange(inputActorRefs);
+            this.Id = Guid.NewGuid();
+            this.InitializeNeuronActor();
+
+            #endregion
 
             #region [ Property Receivers ]
 
@@ -106,6 +122,7 @@ namespace Homunculus.Core.Actors
 
             #endregion
         }
+
         #endregion
 
         #region [ Helper Methods ]
