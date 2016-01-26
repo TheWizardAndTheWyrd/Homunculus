@@ -9,7 +9,7 @@ namespace Homunculus.Core.Tests.Extensions
     public class ExtensionMethodsTests
     {
         /// <summary>
-        /// TODO: Determin why assertion fails without casting to string; probably because of the floating point precision.
+        /// TODO: Determine why assertion fails without casting to string; probably because of the floating point precision.
         /// </summary>
         [TestMethod]
         public void DotProductTest()
