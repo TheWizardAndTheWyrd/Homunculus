@@ -25,6 +25,7 @@
     <DefineConstants>DEBUG;TRACE</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
+    <PlatformTarget>x64</PlatformTarget>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
     <DebugType>pdbonly</DebugType>
@@ -46,6 +47,18 @@
     <Reference Include="Akka.TestKit.VsTest, Version=1.0.4.12, Culture=neutral, processorArchitecture=MSIL">
       <HintPath>..\packages\Akka.TestKit.VsTest.1.0.4\lib\net45\Akka.TestKit.VsTest.dll</HintPath>
       <Private>True</Private>
+    </Reference>
+    <Reference Include="Homunculus.Core.Actors">
+      <HintPath>\\vmware-host\Shared Folders\Documents\Visual Studio 2015\Projects\Homunculus\artifacts\bin\Homunculus.Core.Actors\Debug\net461\Homunculus.Core.Actors.dll</HintPath>
+    </Reference>
+    <Reference Include="Homunculus.Core.Commons">
+      <HintPath>\\vmware-host\Shared Folders\Documents\Visual Studio 2015\Projects\Homunculus\artifacts\bin\Homunculus.Core.Commons\Debug\net461\Homunculus.Core.Commons.dll</HintPath>
+    </Reference>
+    <Reference Include="Homunculus.Core.Extensions">
+      <HintPath>\\vmware-host\Shared Folders\Documents\Visual Studio 2015\Projects\Homunculus\artifacts\bin\Homunculus.Core.Extensions\Debug\net461\Homunculus.Core.Extensions.dll</HintPath>
+    </Reference>
+    <Reference Include="Homunculus.Core.Interfaces">
+      <HintPath>\\vmware-host\Shared Folders\Documents\Visual Studio 2015\Projects\Homunculus\artifacts\bin\Homunculus.Core.Interfaces\Debug\net461\Homunculus.Core.Interfaces.dll</HintPath>
     </Reference>
     <Reference Include="Newtonsoft.Json, Version=7.0.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
       <HintPath>..\packages\Newtonsoft.Json.7.0.1\lib\net45\Newtonsoft.Json.dll</HintPath>

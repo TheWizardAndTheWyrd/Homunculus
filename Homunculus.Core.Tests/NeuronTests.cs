@@ -1,10 +1,7 @@
 ﻿using Microsoft.VisualStudio.TestTools.UnitTesting;
-using Homunculus.Core;
 using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+using Homunculus.Core.Commons;
 using Homunculus.Core.Extensions;
 using Homunculus.Core.Interfaces;
 
