@@ -48,7 +48,7 @@ namespace Homunculus.Core.Interfaces
         /// The Output forwarded to the OutputActors and used as the 
         /// OutputActors' Input in the feed-forward neural network.
         /// </summary>
-        float? Output { get; }
+        float? Output { get; set; }
 
         /// <summary>
         /// A collection of <see cref="IActorRef"/> to send our Output to.

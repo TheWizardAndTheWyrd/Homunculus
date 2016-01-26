@@ -1,56 +1,56 @@
-﻿using System;
-using System.Collections.Generic;
-using Homunculus.Core.Extensions;
-using Homunculus.Core.Interfaces;
+﻿//using System;
+//using System.Collections.Generic;
+//using Homunculus.Core.Extensions;
+//using Homunculus.Core.Interfaces;
 
-namespace Homunculus.Core.Commons
-{
-    public class Neuron : INeuron
-    {
-        #region [ Private Fields ]
-        private Random _random;
+//namespace Homunculus.Core.Commons
+//{
+//    public class Neuron : INeuron
+//    {
+//        #region [ Private Fields ]
+//        private Random _random;
 
-        #endregion
+//        #endregion
 
-        #region [ Public Properties ]
+//        #region [ Public Properties ]
 
-        public Guid Id { get; private set; }
-        public Tuple<float, float, float> Weights { get; set; }
+//        public Guid Id { get; private set; }
+//        public Tuple<float, float, float> Weights { get; set; }
 
-        public IEnumerable<float> Input { get; set; }
+//        public IEnumerable<float> Input { get; set; }
 
-        public double Output => Math.Tanh(Input.DotProduct(Weights.ToList(), Accumulator));
+//        public double Output => Math.Tanh(Input.DotProduct(Weights.ToList(), Accumulator));
 
-        public int Accumulator { get; set; } = 0;
+//        public int Accumulator { get; set; } = 0;
 
-        #endregion
+//        #endregion
 
-        #region [ Constructors ]
-        public Neuron(int seed, Tuple<float, float, float> weights = null, int accumulator = 0)
-        {
-            _random = new Random(seed);
+//        #region [ Constructors ]
+//        public Neuron(int seed, Tuple<float, float, float> weights = null, int accumulator = 0)
+//        {
+//            _random = new Random(seed);
 
-            Weights = weights ??
-                       new Tuple<float, float, float>(_random.NextFloat(), 
-                                                      _random.NextFloat(), 
-                                                      _random.NextFloat());
+//            Weights = weights ??
+//                       new Tuple<float, float, float>(_random.NextFloat(), 
+//                                                      _random.NextFloat(), 
+//                                                      _random.NextFloat());
 
-            Accumulator = accumulator;
+//            Accumulator = accumulator;
 
-            Id = Guid.NewGuid();
-        }
+//            Id = Guid.NewGuid();
+//        }
 
-        public Neuron(int seed, int accumulator = 0)
-        {
-            _random = new Random(seed);
+//        public Neuron(int seed, int accumulator = 0)
+//        {
+//            _random = new Random(seed);
 
-            Weights = new Tuple<float, float, float>(_random.NextFloat(), _random.NextFloat(), _random.NextFloat());
+//            Weights = new Tuple<float, float, float>(_random.NextFloat(), _random.NextFloat(), _random.NextFloat());
 
-            Accumulator = accumulator;
+//            Accumulator = accumulator;
 
-            Id = Guid.NewGuid();
-        }
-        #endregion
+//            Id = Guid.NewGuid();
+//        }
+//        #endregion
         
-    }
-}
+//    }
+//}
