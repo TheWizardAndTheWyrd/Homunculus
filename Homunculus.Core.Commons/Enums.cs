@@ -12,6 +12,8 @@ namespace Homunculus.Core.Commons
             InputReceived,
             InputActorsReceived,
             OutputActorsReceived,
+            WeightsReceived,
+            CalculateDotProduct,
             SignalFault
         }
     }

@@ -32,7 +32,8 @@ namespace Homunculus.Core.Interfaces
         /// TODO: Refactor to allow a <see cref="IEnumerable{T}"/> of Weights.
         /// The synaptic weights of this <see cref="INeuron"/> instance.
         /// </summary>
-        Tuple<float?, float?, float?> Weights { get; set; }
+        //Tuple<float?, float?, float?> Weights { get; set; }
+        IEnumerable<float> Weights { get; set; }
 
         /// <summary>
         /// Calculate the DP of the Input and the Weights.
@@ -42,7 +43,7 @@ namespace Homunculus.Core.Interfaces
         /// <summary>
         /// The <see cref="INeuron"/> instance's input from the InputActors.
         /// </summary>
-        IEnumerable<float?> Input { get; set; }
+        IEnumerable<float> Input { get; set; }
 
         /// <summary>
         /// The Output forwarded to the OutputActors and used as the 
