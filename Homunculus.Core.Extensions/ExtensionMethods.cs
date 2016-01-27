@@ -24,6 +24,11 @@ namespace Homunculus.Core.Extensions
             return v1.Zip(v2, (a, b) => (a * b) + acc).Sum() + acc;
         }
 
+        public static float DotProduct(this IEnumerable<float> v1, IEnumerable<float> v2, float acc)
+        {
+            return v1.Zip(v2, (a, b) => (a * b) + acc).Sum() + acc;
+        }
+
         /// <summary>
         /// No crazed values when generating a random float.
         /// </summary>

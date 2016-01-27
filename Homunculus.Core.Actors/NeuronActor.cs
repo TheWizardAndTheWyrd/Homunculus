@@ -47,7 +47,7 @@ namespace Homunculus.Core.Actors
 
         public IEnumerable<IActorRef> OutputActors { get; set; }
 
-        public int Accumulator { get; set; }
+        public float Accumulator { get; set; }
 
         public float? Bias { get; set; }
 
@@ -57,9 +57,18 @@ namespace Homunculus.Core.Actors
 
         #region [ Public Methods ]
 
+        /// <summary>
+        /// TODO: Make the ActivationFunction a Func{T} that can be received/swappable.
+        /// </summary>
+        /// <param name="dotProduct"></param>
+        /// <param name="threshold"></param>
+        /// <returns></returns>
         public float? ActivationFunction(float? dotProduct, float? threshold)
         {
-            throw new NotImplementedException();
+            //public double Output => Math.Tanh(Input.DotProduct(Weights.ToList(), Accumulator));
+            var result = Math.Tanh((double) (DotProduct + Threshold));
+            return (float) result;
+            //throw new NotImplementedException();
         }
 
         #endregion
@@ -123,6 +132,35 @@ namespace Homunculus.Core.Actors
                 }
             });
 
+            Receive<Tuple<Enums.NeuronSignals, float?>>(m =>
+            {
+                switch (m.Item1)
+                {
+                    case Enums.NeuronSignals.BiasReceived:
+                        this.Bias = m.Item2;
+                        _log.Info($"[{DateTime.Now}] Received: {Enum.GetName(typeof(Enums.NeuronSignals), m.Item1)} with [{JsonConvert.SerializeObject(m.Item2)}] from: {Sender}");
+                        Sender.Tell(Enums.NeuronSignals.BiasReceived, Self);
+                        break;
+
+                    case Enums.NeuronSignals.ThresholdReceived:
+                        this.Threshold = m.Item2;
+                        _log.Info($"[{DateTime.Now}] Received: {Enum.GetName(typeof(Enums.NeuronSignals), m.Item1)} with [{JsonConvert.SerializeObject(m.Item2)}] from: {Sender}");
+                        Sender.Tell(Enums.NeuronSignals.ThresholdReceived, Self);
+                        break;
+
+                    case Enums.NeuronSignals.AccumulatorReceived:
+                        this.Accumulator = (float)m.Item2;
+                        _log.Info($"[{DateTime.Now}] Received: {Enum.GetName(typeof(Enums.NeuronSignals), m.Item1)} with [{JsonConvert.SerializeObject(m.Item2)}] from: {Sender}");
+                        Sender.Tell(Enums.NeuronSignals.AccumulatorReceived, Self);
+                        break;
+
+                    default:
+                        _log.Warning($"[{DateTime.Now}] Invalid NeuronSignal Received: ${Enum.GetName(typeof(Enums.NeuronSignals), m.Item1)} with [{JsonConvert.SerializeObject(m.Item2)}] from: {Sender}");
+                        Sender.Tell(Enums.NeuronSignals.SignalFault, Self);
+                        break;
+                }
+            });
+
             //Receive<Tuple<Enums.NeuronSignals, Tuple<float?, float?, float?>>>(m =>
             Receive<Tuple<Enums.NeuronSignals, IEnumerable<float>>>(m =>
             {
@@ -150,10 +188,10 @@ namespace Homunculus.Core.Actors
                         {
                             try
                             {
-                                this.DotProduct = this.Input.DotProduct(this.Weights);
+                                this.DotProduct = (this.Input.DotProduct(this.Weights, this.Accumulator)) + this.Bias;
                                 Sender.Tell(
-                                    new Tuple<Enums.NeuronSignals, float>(Enums.NeuronSignals.CalculateDotProduct,
-                                        this.DotProduct.Value), Self);
+                                    new Tuple<Enums.NeuronSignals, float?>(Enums.NeuronSignals.CalculateDotProduct,
+                                        this.DotProduct), Self);
                             }
                             catch (Exception e)
                             {
@@ -167,7 +205,18 @@ namespace Homunculus.Core.Actors
                             _log.Warning($"[{DateTime.Now}] One of the inputs of the DotProduct function is null when invoked by {Sender}.  this.Input: {this.Input}  this.Weights: {this.Weights}");            
                             Sender.Tell(Enums.NeuronSignals.SignalFault, Self);
                         }
+                        break;
 
+                    case Enums.NeuronSignals.InvokeActivationFunction:
+                        _log.Info($"[{DateTime.Now}] Received: {Enum.GetName(typeof(Enums.NeuronSignals), m)} from: {Sender}");
+                        this.Output = this.ActivationFunction(this.DotProduct, this.Threshold);
+                        Sender.Tell(Enums.NeuronSignals.InvokeActivationFunction, Self);
+                        break;
+
+                    case Enums.NeuronSignals.ForwardOutput:
+                        _log.Info($"[{DateTime.Now}] Received: {Enum.GetName(typeof(Enums.NeuronSignals), m)} from: {Sender}");
+                        // TODO: Forward output to each OutputActor.
+                        Sender.Tell(Enums.NeuronSignals.ForwardOutput, Self);
                         break;
 
                     default:

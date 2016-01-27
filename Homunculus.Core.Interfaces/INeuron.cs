@@ -59,7 +59,7 @@ namespace Homunculus.Core.Interfaces
         /// <summary>
         /// Increments each time the ActivationFunction is invoked.
         /// </summary>
-        int Accumulator { get; set; }
+        float Accumulator { get; set; }
 
         /// <summary>
         /// Tunable asymmetry that we can apply to our ActivationFunction invocation.
