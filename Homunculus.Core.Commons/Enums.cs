@@ -27,7 +27,8 @@ namespace Homunculus.Core.Commons
             ActivationFunctionReceived,
             InvokeActivationFunction,
             ForwardOutput,
-            SignalFault
+            SignalFault,
+            Ack
         }
     }
 }

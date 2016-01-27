@@ -65,8 +65,7 @@ namespace Homunculus.Core.Actors
         /// <returns></returns>
         public float? ActivationFunction(float? dotProduct, float? threshold)
         {
-            //public double Output => Math.Tanh(Input.DotProduct(Weights.ToList(), Accumulator));
-            var result = Math.Tanh((double) (DotProduct + Threshold));
+            double result = Math.Tanh((Convert.ToDouble(DotProduct)) + Convert.ToDouble(Accumulator));
             return (float) result;
             //throw new NotImplementedException();
         }
@@ -116,21 +115,26 @@ namespace Homunculus.Core.Actors
                     case Enums.NeuronSignals.InputActorsReceived:
                         this.InputActors.ToList().AddRange(m.Item2);
                         _log.Info($"[{DateTime.Now}] Received: {Enum.GetName(typeof(Enums.NeuronSignals), m.Item1)} with [{JsonConvert.SerializeObject(m.Item2)}] from: {Sender}");
-                        Sender.Tell(Enums.NeuronSignals.InputActorsReceived, Self);
+                        Sender.Tell(new Tuple<Enums.NeuronSignals, Enums.NeuronSignals>(Enums.NeuronSignals.Ack, Enums.NeuronSignals.InputActorsReceived), Self);
                         break;
 
                     case Enums.NeuronSignals.OutputActorsReceived:
                         this.OutputActors.ToList().AddRange(m.Item2);
                         _log.Info($"[{DateTime.Now}] Received: {Enum.GetName(typeof(Enums.NeuronSignals), m.Item1)} with [{JsonConvert.SerializeObject(m.Item2)}] from: {Sender}");
-                        Sender.Tell(Enums.NeuronSignals.OutputActorsReceived, Self);
+                        Sender.Tell(new Tuple<Enums.NeuronSignals, Enums.NeuronSignals>(Enums.NeuronSignals.Ack, Enums.NeuronSignals.OutputActorsReceived), Self);
                         break;
 
                     default:
                         _log.Warning($"[{DateTime.Now}] Invalid NeuronSignal Received: ${Enum.GetName(typeof(Enums.NeuronSignals), m.Item1)} with [{JsonConvert.SerializeObject(m.Item2)}] from: {Sender}");
-                        Sender.Tell(Enums.NeuronSignals.SignalFault, Self);
+                        Sender.Tell(new Tuple<Enums.NeuronSignals, Enums.NeuronSignals>(Enums.NeuronSignals.Ack, Enums.NeuronSignals.SignalFault), Self);
                         break;
                 }
             });
+
+            //Receive<Tuple<Enums.NeuronSignals, float>>(m =>
+            //{
+
+            //});
 
             Receive<Tuple<Enums.NeuronSignals, float?>>(m =>
             {
@@ -139,24 +143,33 @@ namespace Homunculus.Core.Actors
                     case Enums.NeuronSignals.BiasReceived:
                         this.Bias = m.Item2;
                         _log.Info($"[{DateTime.Now}] Received: {Enum.GetName(typeof(Enums.NeuronSignals), m.Item1)} with [{JsonConvert.SerializeObject(m.Item2)}] from: {Sender}");
-                        Sender.Tell(Enums.NeuronSignals.BiasReceived, Self);
+                        Sender.Tell(new Tuple<Enums.NeuronSignals, Enums.NeuronSignals>(Enums.NeuronSignals.Ack, Enums.NeuronSignals.BiasReceived), Self);
                         break;
 
                     case Enums.NeuronSignals.ThresholdReceived:
                         this.Threshold = m.Item2;
                         _log.Info($"[{DateTime.Now}] Received: {Enum.GetName(typeof(Enums.NeuronSignals), m.Item1)} with [{JsonConvert.SerializeObject(m.Item2)}] from: {Sender}");
-                        Sender.Tell(Enums.NeuronSignals.ThresholdReceived, Self);
+                        Sender.Tell(new Tuple<Enums.NeuronSignals, Enums.NeuronSignals>(Enums.NeuronSignals.Ack, Enums.NeuronSignals.ThresholdReceived), Self);
                         break;
 
                     case Enums.NeuronSignals.AccumulatorReceived:
                         this.Accumulator = (float)m.Item2;
                         _log.Info($"[{DateTime.Now}] Received: {Enum.GetName(typeof(Enums.NeuronSignals), m.Item1)} with [{JsonConvert.SerializeObject(m.Item2)}] from: {Sender}");
-                        Sender.Tell(Enums.NeuronSignals.AccumulatorReceived, Self);
+                        Sender.Tell(new Tuple<Enums.NeuronSignals, Enums.NeuronSignals>(Enums.NeuronSignals.Ack, Enums.NeuronSignals.AccumulatorReceived), Self);
+                        break;
+
+                    case Enums.NeuronSignals.InputReceived:
+                        if (this.InputActors.ToList().Contains(Sender))
+                        {
+                            this.Input.ToList().Add((float) m.Item2);
+                            _log.Info($"[{DateTime.Now}] Received: {Enum.GetName(typeof(Enums.NeuronSignals), m.Item1)} with [{JsonConvert.SerializeObject(m.Item2)}] from: {Sender}");
+                            Sender.Tell(new Tuple<Enums.NeuronSignals, Enums.NeuronSignals>(Enums.NeuronSignals.Ack, Enums.NeuronSignals.InputReceived), Self);
+                        }
                         break;
 
                     default:
                         _log.Warning($"[{DateTime.Now}] Invalid NeuronSignal Received: ${Enum.GetName(typeof(Enums.NeuronSignals), m.Item1)} with [{JsonConvert.SerializeObject(m.Item2)}] from: {Sender}");
-                        Sender.Tell(Enums.NeuronSignals.SignalFault, Self);
+                        Sender.Tell(new Tuple<Enums.NeuronSignals, Enums.NeuronSignals>(Enums.NeuronSignals.Ack, Enums.NeuronSignals.SignalFault), Self);
                         break;
                 }
             });
@@ -169,12 +182,12 @@ namespace Homunculus.Core.Actors
                     case Enums.NeuronSignals.WeightsReceived:
                         this.Weights = m.Item2;
                         _log.Info($"[{DateTime.Now}] Received: {Enum.GetName(typeof(Enums.NeuronSignals), m.Item1)} with [{JsonConvert.SerializeObject(m.Item2)}] from: {Sender}");
-                        Sender.Tell(Enums.NeuronSignals.WeightsReceived, Self);
+                        Sender.Tell(new Tuple<Enums.NeuronSignals, Enums.NeuronSignals>(Enums.NeuronSignals.Ack, Enums.NeuronSignals.WeightsReceived), Self);
                         break;
 
                     default:
                         _log.Warning($"[{DateTime.Now}] Invalid NeuronSignal Received: ${Enum.GetName(typeof(Enums.NeuronSignals), m.Item1)} with [{JsonConvert.SerializeObject(m.Item2)}] from: {Sender}");
-                        Sender.Tell(Enums.NeuronSignals.SignalFault, Self);
+                        Sender.Tell(new Tuple<Enums.NeuronSignals, Enums.NeuronSignals>(Enums.NeuronSignals.Ack, Enums.NeuronSignals.SignalFault), Self);
                         break;
                 }
             });
@@ -197,31 +210,31 @@ namespace Homunculus.Core.Actors
                             {
                                 _log.Error(e,
                                     $"[{DateTime.Now}] Sending of {m} threw an exception when instantiated by: {Sender}");
-                                Sender.Tell(Enums.NeuronSignals.SignalFault, Self);
+                                Sender.Tell(new Tuple<Enums.NeuronSignals, Enums.NeuronSignals>(Enums.NeuronSignals.Ack, Enums.NeuronSignals.SignalFault), Self);
                             }
                         }
                         else
                         {
-                            _log.Warning($"[{DateTime.Now}] One of the inputs of the DotProduct function is null when invoked by {Sender}.  this.Input: {this.Input}  this.Weights: {this.Weights}");            
-                            Sender.Tell(Enums.NeuronSignals.SignalFault, Self);
+                            _log.Warning($"[{DateTime.Now}] One of the inputs of the DotProduct function is null when invoked by {Sender}.  this.Input: {this.Input}  this.Weights: {this.Weights}");
+                            Sender.Tell(new Tuple<Enums.NeuronSignals, Enums.NeuronSignals>(Enums.NeuronSignals.Ack, Enums.NeuronSignals.SignalFault), Self);
                         }
                         break;
 
                     case Enums.NeuronSignals.InvokeActivationFunction:
                         _log.Info($"[{DateTime.Now}] Received: {Enum.GetName(typeof(Enums.NeuronSignals), m)} from: {Sender}");
                         this.Output = this.ActivationFunction(this.DotProduct, this.Threshold);
-                        Sender.Tell(Enums.NeuronSignals.InvokeActivationFunction, Self);
+                        Sender.Tell(new Tuple<Enums.NeuronSignals, Enums.NeuronSignals>(Enums.NeuronSignals.Ack, Enums.NeuronSignals.InvokeActivationFunction), Self);
                         break;
 
                     case Enums.NeuronSignals.ForwardOutput:
                         _log.Info($"[{DateTime.Now}] Received: {Enum.GetName(typeof(Enums.NeuronSignals), m)} from: {Sender}");
-                        // TODO: Forward output to each OutputActor.
-                        Sender.Tell(Enums.NeuronSignals.ForwardOutput, Self);
+                        ForwardOutputToOutputNeurons();
+                        Sender.Tell(new Tuple<Enums.NeuronSignals, Enums.NeuronSignals>(Enums.NeuronSignals.Ack, Enums.NeuronSignals.ForwardOutput), Self);
                         break;
 
                     default:
                         _log.Warning($"[{DateTime.Now}] Unprocessable NeuronSignal Received: ${Enum.GetName(typeof(Enums.NeuronSignals), m)} from: {Sender}");
-                        Sender.Tell(Enums.NeuronSignals.SignalFault, Self);
+                        Sender.Tell(new Tuple<Enums.NeuronSignals, Enums.NeuronSignals>(Enums.NeuronSignals.Ack, Enums.NeuronSignals.SignalFault), Self);
                         break;
                 }
             });
@@ -232,6 +245,15 @@ namespace Homunculus.Core.Actors
         #endregion
 
         #region [ Helper Methods ]
+
+        private void ForwardOutputToOutputNeurons()
+        {
+            foreach (var a in OutputActors)
+            {
+                _log.Info($"[{DateTime.Now}] Sending Output to next Neuron: {this.Output} from: {Self} to: {a}");
+                a.Tell(new Tuple<Enums.NeuronSignals, float>(Enums.NeuronSignals.InputReceived, (float)this.Output));
+            }
+        }
 
         #endregion
     }
