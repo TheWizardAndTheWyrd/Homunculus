@@ -1,7 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Security.Cryptography;
 using Akka.Actor;
 using Akka.Event;
 using Homunculus.Core.Commons;
