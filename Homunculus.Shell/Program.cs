@@ -18,6 +18,8 @@ namespace Homunculus.Shell
                 AppPrompt.PrintPrompt();
 
                 Debug.WriteLine($"[{DateTime.Now}] Last Command: {AppPrompt.CommandHistory[AppPrompt.CommandHistoryIndex - 1]}");
+
+                CommandInterpreter.ProcessCommand(AppPrompt.CommandHistoryIndex, AppPrompt.CommandHistory);
             }
         }
     }
@@ -51,6 +53,14 @@ namespace Homunculus.Shell
             string s = Console.ReadLine();
             CommandHistory[CommandHistoryIndex] = s;
             CommandHistoryIndex++;
+        }
+    }
+
+    public static class CommandInterpreter
+    {
+        public static void ProcessCommand(int commandHistoryIndex, Dictionary<int, string> commandHistory)
+        {
+            Console.WriteLine($"[{DateTime.Now}] {commandHistoryIndex - 1}> {commandHistory[commandHistoryIndex - 1]}");
         }
     }
 }
