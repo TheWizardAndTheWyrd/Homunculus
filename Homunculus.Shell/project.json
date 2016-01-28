@@ -1,4 +1,4 @@
-﻿{
+{
   "version": "1.0.0-*",
   "description": "Homunculus.Shell Console Application",
   "authors": [ "Ramon Long" ],
@@ -11,6 +11,9 @@
   },
 
   "dependencies": {
+    "Akka": "1.0.6",
+    "Homunculus.Core.Extensions": "1.0.0-*",
+    "Newtonsoft.Json": "8.0.2"
   },
 
   "commands": {
