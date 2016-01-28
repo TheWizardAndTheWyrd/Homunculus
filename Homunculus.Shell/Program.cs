@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Text;
 
 namespace Homunculus.Shell
 {
@@ -7,7 +8,13 @@ namespace Homunculus.Shell
         static void Main(string[] args)
         {
             AppBanner.PrintBanner();
-            System.Console.ReadLine();
+
+            Console.OutputEncoding = Encoding.UTF8;
+
+            while (true)
+            {
+                AppPrompt.PrintPrompt();
+            }
         }
     }
 
@@ -23,8 +30,19 @@ namespace Homunculus.Shell
             System.Console.WriteLine(" / /_/ / _ \\| '_ ` _ \\| | | | '_ \\ / __| | | | | | | / __| | '_ \\ / _ \\ __|");
             System.Console.WriteLine("/ __  / (_) | | | | | | |_| | | | | (__| |_| | | |_| \\__ \\_| | | |  __/ |_ ");
             System.Console.WriteLine("\\/ /_/ \\___/|_| |_| |_|\\__,_|_| |_|\\___|\\__,_|_|\\__,_|___(_)_| |_|\\___|\\__|");
-            System.Console.WriteLine($"        (c) {CurrentYear} The Wizard & The Wyrd, LLC - {VersionNumber}");
+            System.Console.WriteLine($"        (c) 2015 - {CurrentYear} The Wizard & The Wyrd, LLC - {VersionNumber}");
             System.Console.WriteLine();
+        }
+    }
+
+    public static class AppPrompt
+    {
+        private static readonly string ShellPrompt = "\u03c8> ";
+
+        public static void PrintPrompt()
+        {
+            System.Console.Write($"{ShellPrompt} ");
+            System.Console.ReadLine();
         }
     }
 }
