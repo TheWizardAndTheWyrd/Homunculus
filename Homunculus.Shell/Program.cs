@@ -7,9 +7,6 @@ namespace Homunculus.Shell
 {
     public class Program
     {
-        public static Dictionary<int, string> CommandHistory = new Dictionary<int, string>();
-        public static int CommandHistoryIndex = 0;
-
         static void Main(string[] args)
         {
             AppBanner.PrintBanner();
@@ -20,7 +17,7 @@ namespace Homunculus.Shell
             {
                 AppPrompt.PrintPrompt();
 
-                Debug.WriteLine($"[{DateTime.Now}] Last Command: {CommandHistory[CommandHistoryIndex - 1]}");
+                Debug.WriteLine($"[{DateTime.Now}] Last Command: {AppPrompt.CommandHistory[AppPrompt.CommandHistoryIndex - 1]}");
             }
         }
     }
@@ -45,14 +42,15 @@ namespace Homunculus.Shell
     public static class AppPrompt
     {
         private static readonly string ShellPrompt = $"\u03c8> ";
-
+        public static Dictionary<int, string> CommandHistory = new Dictionary<int, string>();
+        public static int CommandHistoryIndex = 0;
 
         public static void PrintPrompt()
         {
-            System.Console.Write($"{ShellPrompt} ");
-            string s = System.Console.ReadLine();
-            Program.CommandHistory[Program.CommandHistoryIndex] = s;
-            Program.CommandHistoryIndex++;
+            Console.Write($"{ShellPrompt} ");
+            string s = Console.ReadLine();
+            CommandHistory[CommandHistoryIndex] = s;
+            CommandHistoryIndex++;
         }
     }
 }
