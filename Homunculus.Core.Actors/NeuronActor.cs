@@ -66,7 +66,6 @@ namespace Homunculus.Core.Actors
         {
             double result = Math.Tanh((Convert.ToDouble(DotProduct)) + Convert.ToDouble(Accumulator));
             return (float) result;
-            //throw new NotImplementedException();
         }
 
         #endregion

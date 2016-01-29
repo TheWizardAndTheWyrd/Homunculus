@@ -71,6 +71,12 @@ namespace Homunculus.Core.Extensions
 
                 jaggedArray[i] = jaggedArray[i].Where(x => x != null).ToArray();
             }
+
+            //for (int i = 0; i < numberOfColumns; i++)
+            //{
+            //    jaggedArray[i] = jaggedArray[i].ToList().Where(x => x != null).ToArray();
+            //}
+
             return jaggedArray;
         }
     }
