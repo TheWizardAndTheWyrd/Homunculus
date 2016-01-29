@@ -23,11 +23,13 @@ namespace Homunculus.Core.Actors
         #region [ Private Fields ]
 
         private readonly ILoggingAdapter _log = Context.GetLogger();
-        
+        //private readonly NeuronActorActivator _neuronActorActivator;
+
         #endregion
 
         #region [ Public Properties ]
         
+
         /// <summary>
         /// Our Id is unique and immutable.
         /// </summary>
@@ -72,33 +74,17 @@ namespace Homunculus.Core.Actors
 
         #region [ Constructors ]
 
-        private void InitializeNeuronActor()
-        {
-            try
-            {
-                this.InputActors = new List<IActorRef>();
-                this.OutputActors = new List<IActorRef>();
-                //this.Weights = new Tuple<float?, float?, float?>(null, null, null);
-                this.Weights = new List<float>();
-                this.DotProduct = null;
-                this.Input = new List<float>();
-                this.Output = null;
-                this.Accumulator = 0;
-                this.Bias = null;
-                this.Threshold = null;
-            }
-            catch (Exception e)
-            {
-                _log.Error(e, $"[{DateTime.Now}] Invocation of InitializeNeuronActor() threw an exception when instantiated by: {Sender}");
-            }
-        }
-
         public NeuronActor()
         {
             #region [ Setup Initial Actor State ]
-
+            // Assign a unique Guid
             this.Id = Guid.NewGuid();
-            this.InitializeNeuronActor();
+
+            // Create and dispose a NeuronActorActivator so that we don't have to keep repeating ourselves.
+            using (var activator = new NeuronActorActivator())
+            {
+                activator.InitializeNeuronActor(this);
+            }
 
             #endregion
 
