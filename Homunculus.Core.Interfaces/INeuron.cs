@@ -29,10 +29,8 @@ namespace Homunculus.Core.Interfaces
         IEnumerable<IActorRef> InputActors { get; set; }
 
         /// <summary>
-        /// TODO: Refactor to allow a <see cref="IEnumerable{T}"/> of Weights.
         /// The synaptic weights of this <see cref="INeuron"/> instance.
         /// </summary>
-        //Tuple<float?, float?, float?> Weights { get; set; }
         IEnumerable<float> Weights { get; set; }
 
         /// <summary>
